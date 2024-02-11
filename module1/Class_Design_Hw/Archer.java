@@ -1,4 +1,8 @@
+//CS211S Class Design HW
+//Jacky Choi
+//Children class
 public class Archer extends Character {
+
     private int energy;
 
     public Archer(String name, int level, int health, int attackCharges, int energy) {
@@ -10,7 +14,7 @@ public class Archer extends Character {
     public void attack() {
         System.out.println(super.getName() + " fires an arrow!");
         if(attackCharges == 5) {
-            attackCharges = attackCharges;
+            attackCharges = attackCharges; //Im pretty sure there is a more efficient way for this, but cannot seem to come up with one right now.
         }
         else {
             attackCharges++;

@@ -1,3 +1,7 @@
+//CS211S Class Design HW
+//Jacky Choi
+//Children class
+
 public class Mage extends Character {
 
     private int mana;

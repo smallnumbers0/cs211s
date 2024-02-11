@@ -1,3 +1,7 @@
+//CS211S Class Design HW
+//Jacky Choi
+//Children class
+
 public class Warrior extends Character {
     private int energy;
     public Warrior(String name, int level, int health, int attackCharges, int energy) {
@@ -8,7 +12,7 @@ public class Warrior extends Character {
     @Override
     public void attack() {
         System.out.println(super.getName() + " charges at the enemy!");
-        if(attackCharges <= 5) {
+        if(attackCharges == 5) {
             attackCharges = attackCharges;
         }
         else {
@@ -29,7 +33,7 @@ public class Warrior extends Character {
             energy++;
         }
         else {
-            System.out.println("Ability Failed");
+            System.out.println("Ability Failed. not enough attack charges");
         }
     }
         

@@ -1,7 +1,10 @@
+//CS211S Class Design HW
+//Jacky Choi
+//Parent class
 
 public abstract class Character {
     private String name;
-    // protected String name; 
+    // protected String name; //tryin to remember difference between protected and private
     private int level;
     protected int health;
     protected int attackCharges;
@@ -58,6 +61,7 @@ public abstract class Character {
         System.out.println(name + " runs for their life!");
     }
 
+    //Im not sure if im doing this part correctly- I am overriding this method again in my child classes to add in a private member for the specific child class
     @Override
     public String toString() {
         return name + " " + "Level: " + level + "Health: " + health + "Attack Charges: " + attackCharges;
@@ -82,7 +86,7 @@ public abstract class Character {
     //     }
     // }
 
-    //pattern matching is pretty cool
+    //replaced above with pattern matching. It is pretty cool
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Character otherCharacter 
