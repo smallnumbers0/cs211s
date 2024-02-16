@@ -36,9 +36,11 @@ public abstract class Character implements Comparable<Character> {
     	}
     }
 
-    public enum Status {
-        STUN, POISON, BURN,  
+    public enum levelBonus {
+        BRONZE, SILVER, GOLD
     }
+
+
 
     //M2 HOMEWORK STATIC
     public static int getNumCharacters() {
