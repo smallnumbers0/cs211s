@@ -1,5 +1,5 @@
 //CS211S Class Design HW
-//Jacky Choi
+//Gevilee Mari and Jacky Choi
 //Parent class
 import java.util.Comparator;
 
@@ -8,43 +8,39 @@ public abstract class Character implements Comparable<Character> {
     private int level;
     protected int health;
     protected int attackCharges;
+    //ENUM USE
+    private CharacterType characterType;
+    private static int numCharacters; 
 
-    private static int numCharacters; //keep track of total number of characters created
 
-    public Character (String name, int level, int health, int attackCharges) {
+    public Character (CharacterType characterType, String name, int level, int health, int attackCharges) {
         this.name = name;
         this.level= level;
         this.health = health;
         this.attackCharges = attackCharges;
-
+        this.characterType = characterType;
         Character.numCharacters++;
-
     }
 
-    //M3 HOMEOWRK ENUM USE in addition to this factory method by taking in an enum Character Type instead of String
-    //M2 creating Factory MEthod
-    //Class and Character Type is kind of like a same context right now before I kind of sort things out properly between them.
-    public static Character addCharacter(CharacterType type, String name, int level, int health, int attackCharges) {
-        if(type == CharacterType.ARCHER) {
-    		return new Archer(name, level, health, attackCharges);
+    public static Character addCharacter(CharacterType characterType, String name, int level, int health, int attackCharges) {
+        if(characterType == CharacterType.ARCHER) {
+    		return new Archer(name, level, health, attackCharges, characterType);
     	} 
-        else if(type == CharacterType.MAGE) {
-    		return new Mage(name, level, health, attackCharges);
+        else if(characterType == CharacterType.MAGE) {
+    		return new Mage(name, level, health, attackCharges, characterType);
         }
-        else if(type == CharacterType.WARRIOR) {
-            return new Warrior(name, level, health, attackCharges);
+        else if(characterType == CharacterType.WARRIOR) {
+            return new Warrior(name, level, health, attackCharges, characterType);
     	} else {
-    		throw new IllegalArgumentException(type + " class type does not exist.");
+    		throw new IllegalArgumentException(characterType + " class type does not exist.");
     	}
     }
-    //After using and testing this in main, I'm not sure if this is even a good way to use enums.
+    //After using and testing this in main, I'm not sure if this is even a good way to use enums. Maybe Ill try making a enum for weapons next for different classes
 
-    //M3 HOMEWORK ENUM
+    //M3 HOMEWORK ENUM 
     public enum CharacterType {
         ARCHER("Archer"), MAGE("Mage"), WARRIOR("Warrior");
-
         private String type;
-
         private CharacterType(String type) {
             this.type = type;
         }
@@ -55,14 +51,18 @@ public abstract class Character implements Comparable<Character> {
         }
     }
 
-    //M3 Comparator HW
+    public CharacterType getCharacterType() {
+        return characterType;
+    }
+
+    //M3 Comparator HW Name
     public static final Comparator<Character> NAME_COMPARATOR = new NameComparator();
     public static class NameComparator implements Comparator<Character> {
         public int compare(Character chr1, Character chr2) {
             return chr1.name.compareToIgnoreCase(chr2.name);
         }
     }
-
+    //M3 Comparator Hw Level
     public static final Comparator<Character> LEVEL_COMPARATOR = new LevelComparator();
     public static class LevelComparator implements Comparator<Character> {
         public int compare(Character chr1, Character chr2) {
@@ -70,7 +70,7 @@ public abstract class Character implements Comparable<Character> {
         }
     }
 
-    //M3 Comparator HW updated
+    //M3 Comparator HW Name and then Level
     public static final Comparator<Character> NAME_LEVEL_COMPARATOR = new NameLevelComparator();
     public static class NameLevelComparator implements Comparator<Character> {
         public int compare(Character chr1, Character chr2) {
@@ -83,8 +83,6 @@ public abstract class Character implements Comparable<Character> {
         }
     }
 
-
-    //M2 HOMEWORK STATIC
     public static int getNumCharacters() {
         return Character.numCharacters;
     }
@@ -134,8 +132,15 @@ public abstract class Character implements Comparable<Character> {
         System.out.println(name + " runs for their life!");
     }
 
+    //M3 HOMEWORK ENUM METHOD USE as a return type.
+    public void displayCharacter() {
+        System.out.println("Name: " + name);
+        System.out.println(getCharacterType());
+        System.out.println("Level: " + level);
+        System.out.println("Health " + health);
+        System.out.println("Attack Charges " + attackCharges + "/5");
+    }
 
-    //M2 Comparable to define sorting characters by level 
     @Override
 	public int compareTo(Character c) {
 		return Integer.compare(level,  c.level); 

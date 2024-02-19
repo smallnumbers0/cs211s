@@ -1,5 +1,5 @@
 //CS211S Class Design HW
-//Jacky Choi
+//Gevilee Mari and Jacky Choi
 //Children class
 
 public class Mage extends Character {
@@ -8,13 +8,13 @@ public class Mage extends Character {
     
     public static int DEFAULT_MANA = 1;
 
-    public Mage(String name, int level, int health, int attackCharges, int mana) {
-        super(name, level, health, attackCharges);
+    public Mage(String name, int level, int health, int attackCharges, CharacterType characterType, int mana) {
+        super(characterType, name, level, health, attackCharges);
         this.mana = mana;
     }
 
-    public Mage(String name, int level, int health, int attackCharges) {
-        super(name, level, health, attackCharges);
+    public Mage(String name, int level, int health, int attackCharges, CharacterType characterType) {
+        super(characterType, name, level, health, attackCharges);
         this.mana = DEFAULT_MANA;
     }
 
@@ -57,8 +57,6 @@ public class Mage extends Character {
         else {
             System.out.println("Not enough energy!");
         }
-
-        
     }
 
     @Override

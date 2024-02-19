@@ -1,41 +1,40 @@
-//CS211S Class Desgin HW
-//Jacky Choi
-
+//CS211S Class Design HW
+//Gevilee Mari and Jacky Choi
 //This program tests the Character Class Design OOP
-// Create an array or list using the parent class as the declared type.
-// Fill with several different child objects.
-// Invoke at least two methods on the objects. (If the method exists only in the child class, use instanceof and a downcast.)
-
-/*
-Changes:
-2/09 replace == with .equalsIgnoreCase to compare strings
-2/10 Fix toString methods on all child classes to use super.toString() properly.
-2/10 Refactor control flow for attack charges check to remove Java compiler warnings in all classes
-2/10 Module 2 HW: Add Static Method and Comparable Method to Character.java
-2/10 Add Factory method
-2/16 Add Enum and Comparator 
-2/16 Implement Enum to factory method
-2/17 Update Comparator for name and level
-*/
 
 import java.util.ArrayList;
-import java.util.Collections; //Added for Collections.sort with Comparable implementation
+import java.util.Collections;
 import java.util.Scanner;
-
 
 public class Main {
     public static void main(String[] args) {
 
-       
         Scanner scnr = new Scanner(System.in);
         int input;
+        String name;
+        int level;
+        int health;
+        int attackCharges;
+        String type;
         ArrayList<Character> characterList = new ArrayList<>();
 
         System.out.println("Welcome to Character Creation Simulator!");
+        System.out.print("Testing purposes: Would you like to start off with some default characters? (y,n): ");
+        String inputStart;
+        inputStart = scnr.nextLine();
+        if(inputStart.equalsIgnoreCase("y")) {
+            characterList.add(Character.addCharacter(Character.CharacterType.ARCHER, "Parissa", 50, 986, 2));
+            characterList.add(Character.addCharacter(Character.CharacterType.MAGE, "Tamoki", 33, 215, 2));
+            characterList.add(Character.addCharacter(Character.CharacterType.WARRIOR, "Tamoki", 32, 1198, 2));
+            System.out.println("Characters added!");
+            System.out.print("Press (enter/return) key to continue: ");
+            System.console().readLine();
+            System.out.println();
+        }
         
         do {
             System.out.println("What would you like to do?: ");
-            System.out.println("1: Display all Characters.");
+            System.out.println("1: Display all Characters and their details.");
             System.out.println("2: Add a Character.");
             System.out.println("3: Sort all Characters by Name.");
             System.out.println("4: Sort all Characters by Level.");
@@ -47,20 +46,17 @@ public class Main {
             switch(input) {
                 case 1:
                     System.out.println("These are all your current chracters: ");
+                    System.out.println("___________________________________________________ ");
                     for (Character character : characterList) {
-                        System.out.println(character);
+                        character.displayCharacter();
+                        System.out.println();
                     }
                     System.out.println();
-                    System.out.println("Enter any key to continue: ");
+                    System.out.println("Press (enter/return) to continue.");
                     System.console().readLine();
+                    System.out.println();
                     break;
                 case 2:
-                    String name;
-                    int level;
-                    int health;
-                    int attackCharges;
-                    String type;
-
                     Character.CharacterType classType;
                     scnr.nextLine();
                 
@@ -71,6 +67,7 @@ public class Main {
 
                         type = scnr.nextLine();
                     }
+
                     if(type.equalsIgnoreCase("archer")) {
                         classType = Character.CharacterType.ARCHER;
                     }
@@ -93,16 +90,25 @@ public class Main {
                     health = scnr.nextInt();
                     System.out.print("Starting Attack Charges: ");
                     attackCharges = scnr.nextInt();
-
-                    //M3 USING ENUM 
+                    if(attackCharges > 5) {
+                        System.out.println("Attack charges defaulted to 5. 5 is the max!");
+                        attackCharges = 5;
+                    }
+                    else if(attackCharges < 0) {
+                        System.out.println("Attack charges defaulted to 0. 0 is the minimum!");
+                        attackCharges = 0;
+                    }
                     characterList.add(Character.addCharacter(classType, name, level, health, attackCharges));
                     System.out.println("Character Added.");
+                    System.out.print("Press (enter/return) key to continue: ");
+                    System.console().readLine();
+                    System.out.println();
                     break;
 
                 case 3:
                     if(characterList.size() != 0) {
                         System.out.println("These are your characters sorted by name: ");
-                        //M3 USINH Comparator
+                        //M3 USING Comparator
                         Collections.sort(characterList, new Character.NameComparator());
                         for (Character character : characterList) {
                             System.out.println(character);
@@ -113,13 +119,15 @@ public class Main {
                         System.out.println("Your list is empty.");
                        
                     }
-                    System.out.println("Enter any key to continue: ");
+                    System.out.println("Press (enter/return) to continue.");
                     System.console().readLine();
+                    System.out.println();
                     break;
 
                 case 4:
                     if(characterList.size() != 0) {
                         System.out.println("These are your characters sorted by level: ");
+                        //M3 USING Comparator
                         Collections.sort(characterList, new Character.LevelComparator());
                         for (Character character : characterList) {
                             System.out.println(character);
@@ -130,13 +138,15 @@ public class Main {
                         System.out.println("Your list is empty.");
                        
                     }
-                    System.out.println("Enter any key to continue: ");
+                    System.out.println("Press (enter/return) to continue.");
                     System.console().readLine();
+                    System.out.println();
                     break;
                 
                 case 5:
                     if(characterList.size() != 0) {
                         System.out.println("These are your characters sorted by name and level: ");
+                        
                         Collections.sort(characterList, new Character.NameLevelComparator());
                         for (Character character : characterList) {
                             System.out.println(character);
@@ -146,8 +156,9 @@ public class Main {
                     else {
                         System.out.println("Your list is empty.");
                     }
-                    System.out.println("Enter any key to continue: ");
+                    System.out.println("Press (enter/return) to continue.");
                     System.console().readLine();
+                    System.out.println();
                     break;
                 case 6:
                     System.out.println("Terminating all creations.");
@@ -162,34 +173,16 @@ public class Main {
 }
 
 /*
-Sample Output
-jackychoi@Jackys-MacBook-Pro Class_Design_Hw % javac Main.java
-jackychoi@Jackys-MacBook-Pro Class_Design_Hw % java Main      
-Static method should get the total number of characters created: 5
-
-Before sort is called to sort by level:
-Val Level: 1 Health: 10 Attack Charges: 2 Energy: 3
-Tav Level: 5 Health: 25 Attack Charges: 2 Energy: 3
-Aloy Level: 10 Health: 44 Attack Charges: 2 Energy: 3
-Cab Level: 6 Health: 18 Attack Charges: 2 Mana: 3
-Abb Level: 3 Health: 7 Attack Charges: 2 Mana: 3
-
-After sort is called to sort by level:
-Val Level: 1 Health: 10 Attack Charges: 2 Energy: 3
-Abb Level: 3 Health: 7 Attack Charges: 2 Mana: 3
-Tav Level: 5 Health: 25 Attack Charges: 2 Energy: 3
-Cab Level: 6 Health: 18 Attack Charges: 2 Mana: 3
-Aloy Level: 10 Health: 44 Attack Charges: 2 Energy: 3
-
-Adding a few characters using factory method: 
-Printing out full list after creating classes with factory method: 
-Val Level: 1 Health: 10 Attack Charges: 2 Energy: 3
-Abb Level: 3 Health: 7 Attack Charges: 2 Mana: 3
-Tav Level: 5 Health: 25 Attack Charges: 2 Energy: 3
-Cab Level: 6 Health: 18 Attack Charges: 2 Mana: 3
-Aloy Level: 10 Health: 44 Attack Charges: 2 Energy: 3
-Nak Level: 5 Health: 20 Attack Charges: 2 Energy: 5
-Pat Level: 22 Health: 112 Attack Charges: 2 Energy: 5
-Ban Level: 12 Health: 114 Attack Charges: 2 Energy: 5
-jackychoi@Jackys-MacBook-Pro Class_Design_Hw % 
- */
+Changes:
+2/09 replace == with .equalsIgnoreCase to compare strings
+2/10 Fix toString methods on all child classes to use super.toString() properly.
+2/10 Refactor control flow for attack charges check to remove Java compiler warnings in all classes
+2/10 Module 2 HW: Add Static Method and Comparable Method to Character.java
+2/10 Add Factory method
+2/16 Add Enum and Comparator 
+2/16 Implement Enum to factory method
+2/17 Update Comparator for name and level
+2/18 update Driver Design for User Input
+2/19 Clean up code
+2/19 Create and use a enum method in character display
+*/

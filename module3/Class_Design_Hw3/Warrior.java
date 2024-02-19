@@ -1,18 +1,18 @@
 //CS211S Class Design HW
-//Jacky Choi
+//Gevilee Mari and Jacky Choi
 //Children class
 
 public class Warrior extends Character {
     private int energy;
     public static int DEFAULT_ENERGY = 5;
 
-    public Warrior(String name, int level, int health, int attackCharges, int energy) {
-        super(name, level, health, attackCharges);
+    public Warrior(String name, int level, int health, int attackCharges, CharacterType characterType, int energy) {
+        super(characterType, name, level, health, attackCharges);
         this.energy = energy;
     }
 
-    public Warrior(String name, int level, int health, int attackCharges) {
-        super(name, level, health, attackCharges);
+    public Warrior(String name, int level, int health, int attackCharges, CharacterType characterType) {
+        super(characterType, name, level, health, attackCharges);
         this.energy = DEFAULT_ENERGY;
     }
 
