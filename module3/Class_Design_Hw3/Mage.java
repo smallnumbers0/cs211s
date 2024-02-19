@@ -52,10 +52,13 @@ public class Mage extends Character {
             health = health * 0 + 1;
             mana = mana * 0 + 1;
             attackCharges -= 5;
+            
         }
         else {
             System.out.println("Not enough energy!");
         }
+
+        
     }
 
     @Override

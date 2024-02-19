@@ -13,58 +13,151 @@ Changes:
 2/10 Refactor control flow for attack charges check to remove Java compiler warnings in all classes
 2/10 Module 2 HW: Add Static Method and Comparable Method to Character.java
 2/10 Add Factory method
+2/16 Add Enum and Comparator 
+2/16 Implement Enum to factory method
+2/17 Update Comparator for name and level
 */
 
 import java.util.ArrayList;
 import java.util.Collections; //Added for Collections.sort with Comparable implementation
+import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
-        Warrior war1 = new Warrior("Val", 1, 10, 2, 3);
-        Warrior war2 = new Warrior("Tav", 5, 25, 2, 3);
-        Archer archer1 = new Archer("Aloy", 10, 44, 2, 3);
-        Mage mage1 = new Mage("Cab", 6, 18, 2, 3);
-        Mage mage2 = new Mage("Abb", 3, 7, 2, 3);
 
+       
+        Scanner scnr = new Scanner(System.in);
+        int input;
         ArrayList<Character> characterList = new ArrayList<>();
-        characterList.add(war1);
-        characterList.add(war2);
-        characterList.add(archer1);
-        characterList.add(mage1);
-        characterList.add(mage2);
 
-        System.out.print("Static method should get the total number of characters created: ");
-        System.out.println(Character.getNumCharacters());
-        System.out.println();
+        System.out.println("Welcome to Character Creation Simulator!");
+        
+        do {
+            System.out.println("What would you like to do?: ");
+            System.out.println("1: Display all Characters.");
+            System.out.println("2: Add a Character.");
+            System.out.println("3: Sort all Characters by Name.");
+            System.out.println("4: Sort all Characters by Level.");
+            System.out.println("5: Sort all Characters by Name and Level!");
+            System.out.println("6: Exit");
+            System.out.print("Please enter your selection: ");
+            input = scnr.nextInt();
 
-        System.out.println("Before sort is called to sort by level:");
-        for (Character character : characterList) {
-            System.out.println(character);
-        }
-        System.out.println();
+            switch(input) {
+                case 1:
+                    System.out.println("These are all your current chracters: ");
+                    for (Character character : characterList) {
+                        System.out.println(character);
+                    }
+                    System.out.println();
+                    System.out.println("Enter any key to continue: ");
+                    System.console().readLine();
+                    break;
+                case 2:
+                    String name;
+                    int level;
+                    int health;
+                    int attackCharges;
+                    String type;
 
-        Collections.sort(characterList); //This should sort by level defined by compareTo 
+                    Character.CharacterType classType;
+                    scnr.nextLine();
+                
+                    System.out.print("Class Type (Archer, Mage, or Warrior): ");
+                    type = scnr.nextLine();
+                    while(!type.equalsIgnoreCase("archer") && !type.equalsIgnoreCase("mage") && !type.equalsIgnoreCase("warrior")) {
+                        System.out.print("The class " + type + " does not exist. Please enter (Archer, Mage, or Warrior): ");
 
-        System.out.println("After sort is called to sort by level:");
-        for (Character character : characterList) {
-            System.out.println(character);
-        }
-        System.out.println();
+                        type = scnr.nextLine();
+                    }
+                    if(type.equalsIgnoreCase("archer")) {
+                        classType = Character.CharacterType.ARCHER;
+                    }
+                    else if (type.equalsIgnoreCase("mage")) {
+                        classType = Character.CharacterType.MAGE;
+                    }
+                    else if (type.equalsIgnoreCase("warrior")) {
+                        classType = Character.CharacterType.WARRIOR;
+                    }
+                    else {
+                        throw new IllegalArgumentException("Type does mot exist: " + type);
+                    }
+                    
 
-        //M2 Using Factory Method
-        System.out.println("Adding a few characters using factory method: ");
-        Character archer2 = Character.addCharacter("archer", "Nak", 5, 20, 2);
-        Character archer3 = Character.addCharacter("archer", "Pat", 22, 112, 2);
-        Character war3 = Character.addCharacter("warrior", "Ban", 12, 114, 2);
+                    System.out.print("Character Name: ");
+                    name = scnr.nextLine();
+                    System.out.print("Level: ");
+                    level = scnr.nextInt();
+                    System.out.print("Health: ");
+                    health = scnr.nextInt();
+                    System.out.print("Starting Attack Charges: ");
+                    attackCharges = scnr.nextInt();
 
-        characterList.add(archer2);
-        characterList.add(archer3);
-        characterList.add(war3);
+                    //M3 USING ENUM 
+                    characterList.add(Character.addCharacter(classType, name, level, health, attackCharges));
+                    System.out.println("Character Added.");
+                    break;
 
-        System.out.println("Printing out full list after creating classes with factory method: ");
-        for (Character character : characterList) {
-            System.out.println(character);
-        }
+                case 3:
+                    if(characterList.size() != 0) {
+                        System.out.println("These are your characters sorted by name: ");
+                        //M3 USINH Comparator
+                        Collections.sort(characterList, new Character.NameComparator());
+                        for (Character character : characterList) {
+                            System.out.println(character);
+                        }
+                        System.out.println();
+                    }
+                    else {
+                        System.out.println("Your list is empty.");
+                       
+                    }
+                    System.out.println("Enter any key to continue: ");
+                    System.console().readLine();
+                    break;
+
+                case 4:
+                    if(characterList.size() != 0) {
+                        System.out.println("These are your characters sorted by level: ");
+                        Collections.sort(characterList, new Character.LevelComparator());
+                        for (Character character : characterList) {
+                            System.out.println(character);
+                        }
+                        System.out.println();
+                    }
+                    else {
+                        System.out.println("Your list is empty.");
+                       
+                    }
+                    System.out.println("Enter any key to continue: ");
+                    System.console().readLine();
+                    break;
+                
+                case 5:
+                    if(characterList.size() != 0) {
+                        System.out.println("These are your characters sorted by name and level: ");
+                        Collections.sort(characterList, new Character.NameLevelComparator());
+                        for (Character character : characterList) {
+                            System.out.println(character);
+                        }
+                        System.out.println();
+                    }
+                    else {
+                        System.out.println("Your list is empty.");
+                    }
+                    System.out.println("Enter any key to continue: ");
+                    System.console().readLine();
+                    break;
+                case 6:
+                    System.out.println("Terminating all creations.");
+                    break;
+                default:
+                    System.out.println("Please choose a number 1 - 6");
+
+            }
+        } while (input != 6);
+        scnr.close();
     }
 }
 
