@@ -28,7 +28,7 @@ public class Main {
             characterList.add(Character.addCharacter(Character.CharacterType.WARRIOR, "Tamoki", 32, 1198, 2));
             System.out.println("Characters added!");
             System.out.print("Press (enter/return) key to continue: ");
-            System.console().readLine();
+            scnr.nextLine();
             System.out.println();
         }
         
@@ -52,9 +52,8 @@ public class Main {
                         System.out.println();
                     }
                     System.out.println();
-                    System.out.println("Press (enter/return) to continue.");
-                    System.console().readLine();
-                    System.out.println();
+                
+                   
                     break;
                 case 2:
                     Character.CharacterType classType;
@@ -100,8 +99,7 @@ public class Main {
                     }
                     characterList.add(Character.addCharacter(classType, name, level, health, attackCharges));
                     System.out.println("Character Added.");
-                    System.out.print("Press (enter/return) key to continue: ");
-                    System.console().readLine();
+                  
                     System.out.println();
                     break;
 
@@ -119,8 +117,7 @@ public class Main {
                         System.out.println("Your list is empty.");
                        
                     }
-                    System.out.println("Press (enter/return) to continue.");
-                    System.console().readLine();
+                 
                     System.out.println();
                     break;
 
@@ -138,8 +135,7 @@ public class Main {
                         System.out.println("Your list is empty.");
                        
                     }
-                    System.out.println("Press (enter/return) to continue.");
-                    System.console().readLine();
+                  
                     System.out.println();
                     break;
                 
@@ -156,8 +152,8 @@ public class Main {
                     else {
                         System.out.println("Your list is empty.");
                     }
-                    System.out.println("Press (enter/return) to continue.");
-                    System.console().readLine();
+                  
+               
                     System.out.println();
                     break;
                 case 6:
